@@ -1,0 +1,610 @@
+[
+ {
+  "nombre": "Ingeniería de Ciberseguridad",
+  "puesto": "Analista SOC junior",
+  "icono": "🛡️",
+  "competencias": [
+   {
+    "nombre": "Redes y TCP/IP",
+    "peso": 92,
+    "recurso": "Cisco Networking Basics (gratis)"
+   },
+   {
+    "nombre": "SIEM (Splunk / Wazuh)",
+    "peso": 84,
+    "recurso": "Laboratorio Wazuh en casa"
+   },
+   {
+    "nombre": "Linux básico",
+    "peso": 78,
+    "recurso": "OverTheWire: Bandit"
+   },
+   {
+    "nombre": "CompTIA Security+",
+    "peso": 61,
+    "recurso": "Ruta de estudio de 8 semanas"
+   },
+   {
+    "nombre": "Inglés técnico",
+    "peso": 70,
+    "recurso": "Leer reportes de CISA cada semana"
+   }
+  ]
+ },
+ {
+  "nombre": "Ingeniería de Software / Sistemas",
+  "puesto": "Desarrollador junior",
+  "icono": "💻",
+  "competencias": [
+   {
+    "nombre": "JavaScript y React",
+    "peso": 90,
+    "recurso": "Curso freeCodeCamp Front End"
+   },
+   {
+    "nombre": "Git y GitHub",
+    "peso": 88,
+    "recurso": "Publicar 3 proyectos propios"
+   },
+   {
+    "nombre": "APIs REST",
+    "peso": 75,
+    "recurso": "Backend simple con Python o Node"
+   },
+   {
+    "nombre": "SQL",
+    "peso": 70,
+    "recurso": "SQLBolt (gratis)"
+   },
+   {
+    "nombre": "Inglés técnico",
+    "peso": 65,
+    "recurso": "Documentación oficial en inglés"
+   }
+  ]
+ },
+ {
+  "nombre": "Ingeniería Industrial",
+  "puesto": "Analista de procesos junior",
+  "icono": "⚙️",
+  "competencias": [
+   {
+    "nombre": "Excel avanzado",
+    "peso": 90,
+    "recurso": "Macros y análisis de datos"
+   },
+   {
+    "nombre": "Mejora de procesos (Lean)",
+    "peso": 82,
+    "recurso": "Mapear un proceso con VSM"
+   },
+   {
+    "nombre": "Power BI",
+    "peso": 65,
+    "recurso": "Dashboard de producción"
+   },
+   {
+    "nombre": "Gestión de proyectos",
+    "peso": 70,
+    "recurso": "Fundamentos PMBOK"
+   },
+   {
+    "nombre": "SAP",
+    "peso": 50,
+    "recurso": "Módulo MM o PP introductorio"
+   }
+  ]
+ },
+ {
+  "nombre": "Ingeniería Civil",
+  "puesto": "Asistente de obra",
+  "icono": "🏗️",
+  "competencias": [
+   {
+    "nombre": "AutoCAD",
+    "peso": 92,
+    "recurso": "Planos de una vivienda de 2 pisos"
+   },
+   {
+    "nombre": "Metrados y presupuestos",
+    "peso": 85,
+    "recurso": "S10 y hojas de metrado"
+   },
+   {
+    "nombre": "MS Project",
+    "peso": 65,
+    "recurso": "Cronograma de una obra pequeña"
+   },
+   {
+    "nombre": "Seguridad en obra",
+    "peso": 75,
+    "recurso": "Ley 29783 y norma G.050"
+   },
+   {
+    "nombre": "Revit / BIM",
+    "peso": 55,
+    "recurso": "Curso BIM básico"
+   }
+  ]
+ },
+ {
+  "nombre": "Administración",
+  "puesto": "Asistente administrativo",
+  "icono": "📊",
+  "competencias": [
+   {
+    "nombre": "Excel intermedio",
+    "peso": 92,
+    "recurso": "Fórmulas, filtros y tablas"
+   },
+   {
+    "nombre": "Redacción de documentos",
+    "peso": 80,
+    "recurso": "Plantillas de cartas y actas"
+   },
+   {
+    "nombre": "Atención al cliente",
+    "peso": 75,
+    "recurso": "Simular llamadas y correos"
+   },
+   {
+    "nombre": "ERP (SAP básico)",
+    "peso": 50,
+    "recurso": "Curso introductorio SAP"
+   },
+   {
+    "nombre": "Organización y agenda",
+    "peso": 70,
+    "recurso": "Practicar con Outlook o Google Calendar"
+   }
+  ]
+ },
+ {
+  "nombre": "Contabilidad",
+  "puesto": "Asistente contable",
+  "icono": "🧾",
+  "competencias": [
+   {
+    "nombre": "Registro contable y PCGE",
+    "peso": 90,
+    "recurso": "Plan Contable General Empresarial"
+   },
+   {
+    "nombre": "Excel avanzado",
+    "peso": 85,
+    "recurso": "Conciliaciones bancarias en Excel"
+   },
+   {
+    "nombre": "SUNAT y PLE",
+    "peso": 80,
+    "recurso": "Declaraciones y libros electrónicos"
+   },
+   {
+    "nombre": "Software contable (Concar)",
+    "peso": 60,
+    "recurso": "Demo gratuita de Concar"
+   },
+   {
+    "nombre": "Atención al detalle",
+    "peso": 70,
+    "recurso": "Revisar comprobantes de práctica"
+   }
+  ]
+ },
+ {
+  "nombre": "Economía",
+  "puesto": "Analista económico junior",
+  "icono": "📈",
+  "competencias": [
+   {
+    "nombre": "Excel avanzado",
+    "peso": 92,
+    "recurso": "Modelos financieros básicos"
+   },
+   {
+    "nombre": "Estadística aplicada (Stata / R)",
+    "peso": 78,
+    "recurso": "Curso R para economistas"
+   },
+   {
+    "nombre": "Análisis de datos macro",
+    "peso": 75,
+    "recurso": "Series del BCRP e INEI"
+   },
+   {
+    "nombre": "Redacción de informes",
+    "peso": 80,
+    "recurso": "Nota de coyuntura de 2 páginas"
+   },
+   {
+    "nombre": "Inglés",
+    "peso": 65,
+    "recurso": "Leer reportes del FMI"
+   }
+  ]
+ },
+ {
+  "nombre": "Marketing",
+  "puesto": "Asistente de marketing",
+  "icono": "📣",
+  "competencias": [
+   {
+    "nombre": "Diseño en Canva",
+    "peso": 88,
+    "recurso": "10 piezas para una marca ficticia"
+   },
+   {
+    "nombre": "Meta Ads / Google Ads",
+    "peso": 80,
+    "recurso": "Certificaciones gratuitas de Meta y Google"
+   },
+   {
+    "nombre": "Redacción de contenidos",
+    "peso": 85,
+    "recurso": "Calendario de contenidos de un mes"
+   },
+   {
+    "nombre": "Analítica (Google Analytics)",
+    "peso": 70,
+    "recurso": "GA4 con una web propia"
+   },
+   {
+    "nombre": "Edición de video corto",
+    "peso": 65,
+    "recurso": "CapCut: reels y TikTok"
+   }
+  ]
+ },
+ {
+  "nombre": "Derecho",
+  "puesto": "Practicante legal",
+  "icono": "⚖️",
+  "competencias": [
+   {
+    "nombre": "Redacción jurídica",
+    "peso": 92,
+    "recurso": "Escritos y contratos modelo"
+   },
+   {
+    "nombre": "Investigación en bases legales",
+    "peso": 85,
+    "recurso": "SPIJ y jurisprudencia del TC"
+   },
+   {
+    "nombre": "Derecho laboral y civil",
+    "peso": 80,
+    "recurso": "Casos prácticos"
+   },
+   {
+    "nombre": "Word avanzado",
+    "peso": 70,
+    "recurso": "Formato de escritos y tablas de contenido"
+   },
+   {
+    "nombre": "Inglés legal",
+    "peso": 55,
+    "recurso": "Contratos en inglés"
+   }
+  ]
+ },
+ {
+  "nombre": "Psicología",
+  "puesto": "Asistente de RR.HH. o clínico",
+  "icono": "🧠",
+  "competencias": [
+   {
+    "nombre": "Reclutamiento y selección",
+    "peso": 85,
+    "recurso": "Diseñar un proceso de entrevista"
+   },
+   {
+    "nombre": "Aplicación de pruebas psicológicas",
+    "peso": 80,
+    "recurso": "Práctica con baterías estándar"
+   },
+   {
+    "nombre": "Elaboración de informes",
+    "peso": 82,
+    "recurso": "Informe psicológico modelo"
+   },
+   {
+    "nombre": "Excel intermedio",
+    "peso": 65,
+    "recurso": "Bases de datos de personal"
+   },
+   {
+    "nombre": "Colegiatura CPsP",
+    "peso": 90,
+    "recurso": "Trámite al egresar"
+   }
+  ]
+ },
+ {
+  "nombre": "Medicina",
+  "puesto": "Médico SERUMS / residente",
+  "icono": "🩺",
+  "competencias": [
+   {
+    "nombre": "SERUMS",
+    "peso": 95,
+    "recurso": "Postulación y adjudicación"
+   },
+   {
+    "nombre": "Certificación BLS / ACLS",
+    "peso": 88,
+    "recurso": "Curso vigente"
+   },
+   {
+    "nombre": "Historia clínica electrónica",
+    "peso": 70,
+    "recurso": "Sistemas del MINSA y EsSalud"
+   },
+   {
+    "nombre": "ENAM aprobado",
+    "peso": 90,
+    "recurso": "Preparación para el examen nacional"
+   },
+   {
+    "nombre": "Comunicación con el paciente",
+    "peso": 80,
+    "recurso": "Simulación de entrega de diagnósticos"
+   }
+  ]
+ },
+ {
+  "nombre": "Enfermería",
+  "puesto": "Enfermero(a) asistencial",
+  "icono": "💉",
+  "competencias": [
+   {
+    "nombre": "Colegiatura CEP y SERUMS",
+    "peso": 95,
+    "recurso": "Trámite al egresar"
+   },
+   {
+    "nombre": "RCP y BLS",
+    "peso": 88,
+    "recurso": "Certificación BLS vigente"
+   },
+   {
+    "nombre": "Bioseguridad",
+    "peso": 85,
+    "recurso": "Normas MINSA actualizadas"
+   },
+   {
+    "nombre": "Historia clínica electrónica",
+    "peso": 70,
+    "recurso": "Práctica con sistemas del MINSA"
+   },
+   {
+    "nombre": "Comunicación con el paciente",
+    "peso": 80,
+    "recurso": "Simulación de entrega de información"
+   }
+  ]
+ },
+ {
+  "nombre": "Odontología",
+  "puesto": "Odontólogo en consultorio",
+  "icono": "🦷",
+  "competencias": [
+   {
+    "nombre": "Colegiatura COP",
+    "peso": 95,
+    "recurso": "Trámite al egresar"
+   },
+   {
+    "nombre": "Odontología general y urgencias",
+    "peso": 90,
+    "recurso": "Práctica clínica supervisada"
+   },
+   {
+    "nombre": "Radiología dental digital",
+    "peso": 70,
+    "recurso": "Curso corto de imagenología"
+   },
+   {
+    "nombre": "Atención al paciente y ventas de tratamientos",
+    "peso": 75,
+    "recurso": "Simulación de presupuestos"
+   },
+   {
+    "nombre": "Bioseguridad",
+    "peso": 85,
+    "recurso": "Protocolos MINSA"
+   }
+  ]
+ },
+ {
+  "nombre": "Arquitectura",
+  "puesto": "Asistente de proyectos",
+  "icono": "📐",
+  "competencias": [
+   {
+    "nombre": "AutoCAD y Revit",
+    "peso": 92,
+    "recurso": "Modelar un proyecto completo"
+   },
+   {
+    "nombre": "Renderizado (Lumion / SketchUp)",
+    "peso": 78,
+    "recurso": "Portafolio con 3 renders"
+   },
+   {
+    "nombre": "Reglamento Nacional de Edificaciones",
+    "peso": 80,
+    "recurso": "Casos de normas A.010 y A.020"
+   },
+   {
+    "nombre": "Portafolio",
+    "peso": 90,
+    "recurso": "Behance o PDF con 5 proyectos"
+   },
+   {
+    "nombre": "Expedientes técnicos",
+    "peso": 65,
+    "recurso": "Memoria descriptiva modelo"
+   }
+  ]
+ },
+ {
+  "nombre": "Comunicación",
+  "puesto": "Asistente de comunicaciones",
+  "icono": "🎙️",
+  "competencias": [
+   {
+    "nombre": "Redacción periodística y corporativa",
+    "peso": 90,
+    "recurso": "Notas de prensa modelo"
+   },
+   {
+    "nombre": "Edición de video (Premiere / CapCut)",
+    "peso": 80,
+    "recurso": "Video institucional de 1 minuto"
+   },
+   {
+    "nombre": "Manejo de redes sociales",
+    "peso": 85,
+    "recurso": "Gestionar una cuenta real"
+   },
+   {
+    "nombre": "Diseño básico (Canva)",
+    "peso": 70,
+    "recurso": "Piezas para campaña"
+   },
+   {
+    "nombre": "Relaciones con medios",
+    "peso": 55,
+    "recurso": "Base de datos de periodistas"
+   }
+  ]
+ },
+ {
+  "nombre": "Diseño Gráfico",
+  "puesto": "Diseñador junior",
+  "icono": "🎨",
+  "competencias": [
+   {
+    "nombre": "Illustrator y Photoshop",
+    "peso": 92,
+    "recurso": "Rediseñar una marca local"
+   },
+   {
+    "nombre": "Portafolio",
+    "peso": 90,
+    "recurso": "Behance con 5 proyectos"
+   },
+   {
+    "nombre": "Figma",
+    "peso": 70,
+    "recurso": "Prototipo de una app sencilla"
+   },
+   {
+    "nombre": "InDesign",
+    "peso": 55,
+    "recurso": "Maquetar una revista de 8 páginas"
+   },
+   {
+    "nombre": "Comunicación con clientes",
+    "peso": 75,
+    "recurso": "Redactar y presentar un brief"
+   }
+  ]
+ },
+ {
+  "nombre": "Educación",
+  "puesto": "Docente de aula",
+  "icono": "📚",
+  "competencias": [
+   {
+    "nombre": "Currículo Nacional",
+    "peso": 92,
+    "recurso": "Programación curricular MINEDU"
+   },
+   {
+    "nombre": "Manejo de aula",
+    "peso": 85,
+    "recurso": "Estrategias de convivencia escolar"
+   },
+   {
+    "nombre": "Evaluación formativa",
+    "peso": 80,
+    "recurso": "Rúbricas y retroalimentación"
+   },
+   {
+    "nombre": "Herramientas digitales (Classroom)",
+    "peso": 75,
+    "recurso": "Google for Education (gratis)"
+   },
+   {
+    "nombre": "Inglés básico",
+    "peso": 50,
+    "recurso": "Curso del ICPNA o Británico"
+   }
+  ]
+ },
+ {
+  "nombre": "Gastronomía",
+  "puesto": "Ayudante de cocina",
+  "icono": "🍳",
+  "competencias": [
+   {
+    "nombre": "Técnicas de corte y cocción",
+    "peso": 92,
+    "recurso": "Práctica diaria con mise en place"
+   },
+   {
+    "nombre": "Manipulación de alimentos (BPM)",
+    "peso": 90,
+    "recurso": "Carnet de sanidad y curso BPM"
+   },
+   {
+    "nombre": "Trabajo bajo presión",
+    "peso": 85,
+    "recurso": "Prácticas en restaurante"
+   },
+   {
+    "nombre": "Costeo de recetas",
+    "peso": 60,
+    "recurso": "Fichas técnicas en Excel"
+   },
+   {
+    "nombre": "Cocina peruana e internacional",
+    "peso": 75,
+    "recurso": "Recetario de 20 platos"
+   }
+  ]
+ },
+ {
+  "nombre": "Turismo y Hotelería",
+  "puesto": "Recepcionista / asistente",
+  "icono": "🧳",
+  "competencias": [
+   {
+    "nombre": "Inglés conversacional",
+    "peso": 95,
+    "recurso": "Práctica con turistas"
+   },
+   {
+    "nombre": "Atención al cliente",
+    "peso": 90,
+    "recurso": "Simular check-in y quejas"
+   },
+   {
+    "nombre": "Sistemas hoteleros (Opera / Cloudbeds)",
+    "peso": 65,
+    "recurso": "Demo gratuita"
+   },
+   {
+    "nombre": "Segundo idioma",
+    "peso": 50,
+    "recurso": "Portugués o francés básico"
+   },
+   {
+    "nombre": "Excel básico",
+    "peso": 60,
+    "recurso": "Reservas y reportes"
+   }
+  ]
+ }
+]
