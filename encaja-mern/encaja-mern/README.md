@@ -14,7 +14,7 @@ encaja-mern/
 ├── server/   API Express + Mongoose + worker de scraping (Axios + Cheerio + node-cron)
 ├── client/   React + Vite + React Router (las 3 interfaces)
 ├── docker-compose.yml   MongoDB local
-└── .github/workflows/ci.yml   pruebas + build + gitleaks
+└── .github/workflows/ci.yml   gitleaks + pruebas con cobertura ≥ 85 % + build + despliegue a producción
 ```
 
 ## Cómo ejecutarlo
@@ -74,12 +74,36 @@ Además: contraseñas con bcrypt (12 rondas), `helmet`, CORS restringido a `CLIE
 
 ```bash
 cd server
-npm test
+npm test                 # solo pruebas
+npm run test:coverage    # pruebas + cobertura (falla si alguna métrica < 85 %)
 ```
 - `tests/unit.test.js`: detección de competencias, parsers de los 3 portales con HTML de ejemplo y TEST-05 (XSS).
 - `tests/seguridad.test.js`: TEST-01 a TEST-04 contra la API con MongoDB en memoria (`mongodb-memory-server` descarga MongoDB la primera vez).
+- `tests/api.test.js`: integración de todas las rutas (auth, portal del usuario, públicas, admin y scraping), incluidos los errores 400/401/403/404/409/423/500.
+- `tests/scraper.test.js`: runner de scraping, búsqueda por portal y cron diario, con `axios` simulado (no se llama a los portales reales).
+- `tests/servicios.test.js`: cálculo de encaje, casos borde de competencias, utilidades, middlewares y configuración.
 
-## Despliegue sugerido
+### Cobertura mínima: 85 %
+La cobertura se mide sobre `server/src` (se excluyen solo los puntos de arranque por consola: `server.js`, `seed.js` y `scraper/cli.js`).
+Jest exige **85 %** en líneas, sentencias, funciones y ramas (`coverageThreshold` en `server/package.json`). Si alguna queda por debajo:
+
+1. `npm run test:coverage` termina con error y el job **api** del pipeline falla.
+2. El paso *Puerta de calidad* publica la tabla de cobertura en el resumen de GitHub Actions con el veredicto.
+3. El job **despliegue-produccion** depende de `secretos`, `api` y `cliente`, así que **no se ejecuta**: nada llega a producción.
+
+El reporte completo (HTML en `coverage/lcov-report/index.html`) se guarda como artefacto `cobertura-api` en cada ejecución.
+
+## Despliegue a producción
 React en Vercel · API y worker en Render · MongoDB Atlas. Define las variables de `.env.example` en cada servicio (nunca en el código).
+
+El pipeline despliega solo en un `push` a `main` con todos los jobs en verde. Para activarlo, crea estos secretos en *Settings → Secrets and variables → Actions*:
+
+| Secreto | Para qué |
+|---|---|
+| `RENDER_DEPLOY_HOOK_URL` | Deploy hook del servicio de la API en Render |
+| `VERCEL_DEPLOY_HOOK_URL` | Deploy hook del proyecto del frontend en Vercel |
+| `PROD_API_URL` | URL pública de la API, para verificar `/api/salud` después del despliegue |
+
+Sin esos secretos el job termina con un aviso y no despliega nada.
 
 > El scraping respeta un volumen bajo (máx. 40 ofertas por portal y job, una vez al día) y es para fines académicos. Los portales cambian su HTML con frecuencia: si una fuente deja de devolver ofertas, el job lo muestra como error y se ajusta su parser en `services/scraper/fuentes.js`.
