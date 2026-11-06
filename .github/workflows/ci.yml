@@ -1,5 +1,14 @@
-name: CI
-on: [push, pull_request]
+name: CI/CD
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # Cobertura mínima exigida a la API. Si es menor, el pipeline falla y NO se despliega a producción.
+  COVERAGE_MIN: 85
+
 jobs:
   secretos:
     # REQ-05: el pipeline falla si se sube una credencial (MONGO_URI, JWT_SECRET, llaves)
@@ -9,21 +18,86 @@ jobs:
         with: { fetch-depth: 0 }
       - uses: gitleaks/gitleaks-action@v2
         env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+
   api:
+    # Pruebas unitarias, de integración y de seguridad (TEST-01 a TEST-05) + puerta de cobertura
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: encaja-mern/encaja-mern/server } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm install
-      - run: npm test
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: encaja-mern/encaja-mern/server/package-lock.json
+      - run: npm ci
+      - name: Pruebas con cobertura (Jest falla si alguna métrica < 85 %)
+        run: npm run test:coverage
+      - name: Puerta de calidad - cobertura mínima ${{ env.COVERAGE_MIN }} %
+        if: ${{ !cancelled() }}
+        run: |
+          node -e '
+            const fs = require("fs");
+            const min = Number(process.env.COVERAGE_MIN);
+            const archivo = "coverage/coverage-summary.json";
+            if (!fs.existsSync(archivo)) { console.error("No se generó el reporte de cobertura."); process.exit(1); }
+            const t = JSON.parse(fs.readFileSync(archivo, "utf8")).total;
+            const filas = ["lines", "statements", "functions", "branches"].map((k) => [k, t[k].pct]);
+            const bajas = filas.filter(([, pct]) => pct < min);
+            const tabla = ["| Métrica | Cobertura | Mínimo | Estado |", "|---|---|---|---|",
+              ...filas.map(([k, pct]) => `| ${k} | ${pct} % | ${min} % | ${pct >= min ? "✅" : "❌"} |`)].join("\n");
+            const veredicto = bajas.length ? `❌ Cobertura insuficiente: no se permite el despliegue a producción.` : `✅ Cobertura aprobada: se permite el despliegue.`;
+            fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Cobertura de la API\n\n${tabla}\n\n${veredicto}\n`);
+            console.log(tabla + "\n" + veredicto);
+            process.exit(bajas.length ? 1 : 0);
+          '
+      - name: Guardar reporte de cobertura
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobertura-api
+          path: encaja-mern/encaja-mern/server/coverage/
+          retention-days: 14
+
   cliente:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: encaja-mern/encaja-mern/client } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm install
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: encaja-mern/encaja-mern/client/package-lock.json
+      - run: npm ci
       - run: npm run build
+
+  despliegue-produccion:
+    # Solo corre si TODO lo anterior pasó (incluida la cobertura >= 85 %) y el cambio llegó a main.
+    needs: [secretos, api, cliente]
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment: produccion
+    concurrency: { group: produccion, cancel-in-progress: false }
+    steps:
+      - name: Desplegar API (Render) y frontend (Vercel)
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ] && [ -z "$VERCEL_DEPLOY_HOOK" ]; then
+            echo "::warning::Cobertura aprobada, pero faltan los secretos RENDER_DEPLOY_HOOK_URL / VERCEL_DEPLOY_HOOK_URL: no se desplegó nada."
+            exit 0
+          fi
+          if [ -n "$RENDER_DEPLOY_HOOK" ]; then curl -fsS -X POST "$RENDER_DEPLOY_HOOK" > /dev/null && echo "API enviada a Render"; fi
+          if [ -n "$VERCEL_DEPLOY_HOOK" ]; then curl -fsS -X POST "$VERCEL_DEPLOY_HOOK" > /dev/null && echo "Frontend enviado a Vercel"; fi
+      - name: Verificar /api/salud en producción
+        env:
+          API_URL: ${{ secrets.PROD_API_URL }}
+        run: |
+          if [ -z "$API_URL" ]; then echo "::notice::Sin PROD_API_URL: se omite el health check."; exit 0; fi
+          for i in $(seq 1 20); do
+            if curl -fsS "$API_URL/api/salud" | grep -q '"ok":true'; then echo "Producción en línea"; exit 0; fi
+            sleep 15
+          done
+          echo "::error::/api/salud no respondió después del despliegue"; exit 1

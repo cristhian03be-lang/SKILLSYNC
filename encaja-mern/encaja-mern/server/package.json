@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "seed": "node src/seed.js",
     "scrape": "node src/services/scraper/cli.js",
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage"
   },
   "dependencies": {
     "axios": "^1.7.7",
@@ -34,6 +35,21 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testTimeout": 30000
+    "testTimeout": 30000,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/server.js",
+      "!src/seed.js",
+      "!src/services/scraper/cli.js"
+    ],
+    "coverageReporters": ["text", "text-summary", "json-summary", "lcov"],
+    "coverageThreshold": {
+      "global": {
+        "statements": 85,
+        "branches": 85,
+        "functions": 85,
+        "lines": 85
+      }
+    }
   }
 }
