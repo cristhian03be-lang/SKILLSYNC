@@ -72,9 +72,57 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+  analisis-estatico:
+    # SAST: análisis estático de seguridad SIN ejecutar el código + auditoría de dependencias.
+    name: Análisis estático (SAST)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: encaja-mern/encaja-mern/server/package-lock.json
+      - name: Instalar dependencias de la API
+        working-directory: encaja-mern/encaja-mern/server
+        run: npm ci
+      - name: ESLint security (API)
+        working-directory: encaja-mern/encaja-mern/server
+        run: npm run lint
+      - name: npm audit - API
+        working-directory: encaja-mern/encaja-mern/server
+        continue-on-error: true
+        run: npm audit --audit-level=high
+      - name: Instalar dependencias del cliente
+        working-directory: encaja-mern/encaja-mern/client
+        run: npm ci
+      - name: npm audit - cliente
+        working-directory: encaja-mern/encaja-mern/client
+        continue-on-error: true
+        run: npm audit --audit-level=high
+
+  semgrep:
+    # SAST con reglas OWASP para Express, Node y React. Reporte visible (SARIF).
+    name: Semgrep (reglas OWASP)
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Escaneo Semgrep
+        continue-on-error: true
+        run: semgrep scan --config p/owasp-top-ten --config p/javascript --config p/nodejs --config p/react --sarif --output semgrep.sarif --metrics off
+      - name: Guardar reporte Semgrep
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-sarif
+          path: semgrep.sarif
+          retention-days: 14
+
   despliegue-produccion:
-    # Solo corre si TODO lo anterior pasó (incluida la cobertura >= 85 %) y el cambio llegó a main.
-    needs: [secretos, api, cliente]
+    # Solo corre si TODO lo anterior pasó (cobertura >= 85 % y el SAST) y el cambio llegó a main.
+    needs: [secretos, api, cliente, analisis-estatico]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     environment: produccion

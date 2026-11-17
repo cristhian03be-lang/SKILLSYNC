@@ -1,0 +1,49 @@
+# Dependabot: revisa semanalmente las dependencias y abre pull requests cuando una
+# librería publica una corrección de seguridad o una versión nueva.
+# Gestión de dependencias / Supply Chain (REQ de seguridad del proyecto Encaja).
+version: 2
+updates:
+  # --- API (Express + MongoDB) ---
+  - package-ecosystem: "npm"
+    directory: "/encaja-mern/encaja-mern/server"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Lima"
+    open-pull-requests-limit: 5
+    labels: ["dependencias", "seguridad", "api"]
+    commit-message:
+      prefix: "deps(api)"
+    groups:
+      # Agrupa parches y menores en un solo PR para no saturar al equipo.
+      api-menores:
+        update-types: ["minor", "patch"]
+
+  # --- Cliente (React + Vite) ---
+  - package-ecosystem: "npm"
+    directory: "/encaja-mern/encaja-mern/client"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Lima"
+    open-pull-requests-limit: 5
+    labels: ["dependencias", "seguridad", "cliente"]
+    commit-message:
+      prefix: "deps(cliente)"
+    groups:
+      cliente-menores:
+        update-types: ["minor", "patch"]
+
+  # --- GitHub Actions (versiones de las acciones del pipeline) ---
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Lima"
+    labels: ["dependencias", "ci"]
+    commit-message:
+      prefix: "deps(ci)"
