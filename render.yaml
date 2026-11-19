@@ -1,16 +1,17 @@
 # Blueprint de Render para Encaja (MERN)
 # Render > New > Blueprint > elegir este repo. Crea los 2 servidores de una vez.
 services:
-  # 1) API (Express + MongoDB Atlas)
+  # 1) API (Express + MongoDB embebido)
   - type: web
     name: encaja-api
     runtime: node
     plan: free
     region: oregon
     rootDir: encaja-mern/encaja-mern/server
-    buildCommand: npm ci --omit=dev
-    # El seed es idempotente: carga carreras, admin y ofertas de muestra si no existen
-    startCommand: npm run seed && npm start
+    # --include=dev: instala mongodb-memory-server (MongoDB embebido)
+    buildCommand: npm ci --include=dev
+    # Al iniciar levanta MongoDB embebido y corre el seed (carreras, admin y ofertas de muestra)
+    startCommand: npm start
     healthCheckPath: /api/salud
     autoDeploy: false # lo despliega el pipeline de CI/CD (deploy hook) solo si pasan las pruebas
     envVars:
@@ -18,8 +19,8 @@ services:
         value: production
       - key: NODE_VERSION
         value: "20"
-      - key: MONGO_URI
-        sync: false # cadena de MongoDB Atlas (se pega en el panel, nunca en GitHub)
+      - key: MONGO_EMBEBIDO
+        value: "true" # MongoDB dentro del servidor: sin cuentas externas (los datos se reinician al reiniciar)
       - key: JWT_SECRET
         generateValue: true # Render genera un secreto aleatorio
       - key: CLIENT_ORIGIN
@@ -27,7 +28,7 @@ services:
       - key: ADMIN_EMAIL
         value: admin@encaja.pe
       - key: ADMIN_PASSWORD
-        sync: false # mínimo 8 caracteres
+        generateValue: true # Render genera la clave; se ve en Environment del servicio
       - key: SCRAPING_CRON
         value: "0 6 * * *"
 
