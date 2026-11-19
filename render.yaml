@@ -1,0 +1,53 @@
+# Blueprint de Render para Encaja (MERN)
+# Render > New > Blueprint > elegir este repo. Crea los 2 servidores de una vez.
+services:
+  # 1) API (Express + MongoDB embebido)
+  - type: web
+    name: encaja-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: encaja-mern/encaja-mern/server
+    # --include=dev: instala mongodb-memory-server (MongoDB embebido)
+    buildCommand: npm ci --include=dev
+    # Al iniciar levanta MongoDB embebido y corre el seed (carreras, admin y ofertas de muestra)
+    startCommand: npm start
+    healthCheckPath: /api/salud
+    autoDeploy: false # lo despliega el pipeline de CI/CD (deploy hook) solo si pasan las pruebas
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+      - key: MONGO_EMBEBIDO
+        value: "true" # MongoDB dentro del servidor: sin cuentas externas (los datos se reinician al reiniciar)
+      - key: JWT_SECRET
+        generateValue: true # Render genera un secreto aleatorio
+      - key: CLIENT_ORIGIN
+        sync: false # URL del frontend, ej. https://encaja-web.onrender.com
+      - key: ADMIN_EMAIL
+        value: admin@encaja.pe
+      - key: ADMIN_PASSWORD
+        generateValue: true # Render genera la clave; se ve en Environment del servicio
+      - key: SCRAPING_CRON
+        value: "0 6 * * *"
+
+  # 2) Frontend (React + Vite) como sitio estático
+  - type: web
+    name: encaja-web
+    runtime: static
+    rootDir: encaja-mern/encaja-mern/client
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      # React Router: /admin, /scraping, /acceso cargan index.html
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+    envVars:
+      - key: VITE_API_URL
+        sync: false # URL de la API + /api, ej. https://encaja-api.onrender.com/api
