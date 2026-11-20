@@ -54,4 +54,4 @@ Secretos del repositorio usados por el pipeline: `RENDER_DEPLOY_HOOK_URL` y `PRO
 
 ## Equipo
 
-Proyecto del curso Desarrollo de Software Seguro, UPC.
+Proyecto del curso Arquitectura de Aplicaciones, UPC.
